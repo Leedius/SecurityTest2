@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="memberMapper">
+	<!-- type에는 위치정보를 다적어야한다 -->
+	<resultMap type="com.study.test.vo.MemberVO" id="member">
+		<id column="MEM_ID" property="memId"/>
+		<result column="MEM_PW"  property="memPw"/>
+		<result column="MEM_NAME"  property="memName"/>
+		<result column="ROLE"  property="role"/>
+	</resultMap>
+	
+	<!-- 회원가입 -->
+	<insert id="join">
+		INSERT INTO SECURITY_MEMBER (
+			MEM_ID
+			, MEM_PW
+			, MEM_NAME
+			, ROLE
+		) VALUES (
+			#{memId}
+			, #{memPw}
+			, #{memName}
+			, #{role}
+		)
+	</insert>
+	
+	<!-- 로그인을 위한 정보 조회 기능 -->
+	<select id="getUserInfoForLogin" resultMap="member">
+		SELECT MEM_ID
+			, MEM_PW
+			, ROLE
+		FROM SECURITY_MEMBER
+		WHERE
+			MEM_ID = #{memId}
+	</select>
+	
+	<!-- 회원 목록 조회 -->
+	<select id="getMemberList" resultMap="member">
+		SELECT MEM_ID
+			, MEM_NAME
+			, ROLE
+		FROM SECURITY_MEMBER
+	</select>
+	
+	
+</mapper>
+
+	
